@@ -29,7 +29,7 @@
   }
   
   .navMenu {
-    display: block;
+    /* display: none; */
     visibility: visible;
   }
   
