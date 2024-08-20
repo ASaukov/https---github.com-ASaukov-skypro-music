@@ -1,8 +1,10 @@
+import { TrackType } from "@/types/tracks"
 import styles from "./Track.module.css"
 
-export const Track = () => {
+type TrackProps = {track: TrackType}
+export const Track = ({track}: TrackProps) => {
     return (
-        <div className={styles.playlistItem}>
+        <div key={track._id} className={styles.playlistItem}>
               <div className={styles.playlistTrack}>
                 <div className={styles.trackTitle}>
                   <div className={styles.trackTitleImage}>
@@ -12,18 +14,18 @@ export const Track = () => {
                   </div>
                   <div className="track__title-text">
                     <a className={styles.trackTitleLink} href="http://">
-                      Guilt <span className={styles.trackTitleSpan} />
+                      {track.name} <span className={styles.trackTitleSpan} />
                     </a>
                   </div>
                 </div>
                 <div className={styles.trackAuthor}>
                   <a className={styles.trackAuthorLink} href="http://">
-                    Nero
+                    {track.author}
                   </a>
                 </div>
                 <div className={styles.trackAlbum}>
                   <a className={styles.trackAlbumLink} href="http://">
-                    Welcome Reality
+                    {track.album}
                   </a>
                 </div>
                 <div className="track__time">

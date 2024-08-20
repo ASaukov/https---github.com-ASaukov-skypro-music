@@ -9,7 +9,6 @@ export default function Home() {
       <div className={styles.container}>
         <Main/>
         <Bar />
-        <footer className="footer" />
       </div>
     </div>
   );
