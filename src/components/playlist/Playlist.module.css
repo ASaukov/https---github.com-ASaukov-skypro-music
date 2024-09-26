@@ -8,3 +8,8 @@
     flex-direction: column;
     overflow-y: auto;
   }
+
+  .contentPlaylist::-webkit-scrollbar {
+    width: 0px;
+  }
+  

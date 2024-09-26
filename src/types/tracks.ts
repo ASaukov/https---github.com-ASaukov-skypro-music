@@ -8,4 +8,5 @@ export type TrackType = {
     logo: unknown,
     track_file: string,
     startedUser: number,
+    duration_in_seconds: number,
 }
