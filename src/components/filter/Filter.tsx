@@ -4,21 +4,12 @@ import { TrackType } from "@/types/tracks";
 import styles from "./Filter.module.css";
 import { useState } from "react";
 import { FilterItem } from "./FilterItem";
+import { getUniqueValues } from "@/utils/GetUniqueValues";
 
 type FilterProps = { tracks: TrackType[] };
 
 export const Filter = ({ tracks }: FilterProps) => {
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
-  const getUniqueValues = <T, K extends keyof T>(
-    items: T[],
-    key: K
-  ): string[] => {
-    const uniqueValues = new Set<string>();
-    items.forEach((item) => {
-      uniqueValues.add(String(item[key]));
-    });
-    return Array.from(uniqueValues);
-  };
   const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];
   const filters = [
     {
@@ -39,7 +30,7 @@ export const Filter = ({ tracks }: FilterProps) => {
   ];
 
   const handleFilter = (filterName: string) => {
-    // console.log(filterName);
+
     setActiveFilter((prev) => (prev === filterName ? null : filterName));
   };
 

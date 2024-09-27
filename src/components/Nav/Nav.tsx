@@ -9,8 +9,6 @@ export const Nav = () => {
   const toggleOpenNav: React.MouseEventHandler<HTMLDivElement> = () => {
     setIsOpen((prev) => !prev)
   }
-  
-
     return (
     <nav className={styles.mainNav}>
         <div className={styles.navLogo}>
@@ -42,7 +40,6 @@ export const Nav = () => {
           </ul>
         </div>
         )}
-        
       </nav>
     )
 }

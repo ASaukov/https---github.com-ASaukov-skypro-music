@@ -29,9 +29,6 @@ export const MainCenterblock = ({ setCurrentTrack }: props) => {
     };
     getData();
   });
-  // let tracks: TrackType[] = []
-  // let err: string | null = null
-
   return (
     <div className={styles.mainCenterblock}>
       <Search />
