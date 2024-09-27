@@ -14,7 +14,7 @@ export default function Error({ error }: ErrorProps) {
   return (
     <div>
       <h2>Что то пошло не так!</h2>
-      <button onClick={reset}>Попробовать снова</button>
+      
     </div>
   );
 }
