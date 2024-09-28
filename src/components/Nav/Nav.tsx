@@ -5,7 +5,7 @@ import React from "react";
 
 
 export const Nav = () => {
-  const [isOpen, setIsOpen] = React.useState<boolean>(false);
+  const [isOpen, setIsOpen] = React.useState(false);
   const toggleOpenNav: React.MouseEventHandler<HTMLDivElement> = () => {
     setIsOpen((prev) => !prev)
   }
