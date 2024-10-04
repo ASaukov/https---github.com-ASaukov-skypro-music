@@ -11,6 +11,7 @@ import {
   useState,
 } from "react";
 import ProgressBar from "../progressBar/ProgressBar";
+import { FormateTime } from "@/utils/FormateTime";
 
 type props = {
   currentTrack: TrackType;
@@ -23,8 +24,8 @@ export const Player = ({ currentTrack }: props) => {
     currentTime: 0,
     duration: 0,
   });
-
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
   const onTogglePlay = () => {
     if (audioRef.current) {
       if (isPlay) {
@@ -39,6 +40,7 @@ export const Player = ({ currentTrack }: props) => {
 
   useEffect(() => {
     setIsPlay(false);
+    onTogglePlay();
   }, [currentTrack]);
 
   const onRepeat = () => {
@@ -78,17 +80,19 @@ export const Player = ({ currentTrack }: props) => {
 
   return (
     <>
-      <audio
-        className={styles.playerBrouser}
-        onTimeUpdate={onChangeTime}
-        ref={audioRef}
-        controls
-        src={currentTrack.track_file}
-      />
-
       <div className={styles.bar}>
         <div className={styles.barContent}>
-          {/* <div className={styles.barPlayerProgress} /> */}
+          <div className={styles.barTimer}>
+            {FormateTime(progress.duration)} /{" "}
+            {FormateTime(progress.currentTime)}
+          </div>
+          <audio
+            className={styles.playerBrouser}
+            onTimeUpdate={onChangeTime}
+            ref={audioRef}
+            controls
+            src={currentTrack.track_file}
+          />
           <ProgressBar
             max={progress.duration}
             value={progress.currentTime}
