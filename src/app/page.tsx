@@ -1,10 +1,10 @@
 "use client";
 
 import styles from "./page.module.css";
-import { Bar } from "../components/bar/Bar";
 import { Main } from "../components/main/Main";
 import { useState } from "react";
 import { TrackType } from "@/types/tracks";
+import { Player } from "@/components/player/Player";
 
 export default function Home() {
   const [currentTrack, setCurrentTrack] = useState<TrackType | null>(null);
@@ -12,7 +12,7 @@ export default function Home() {
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <Main setCurrentTrack={setCurrentTrack} />
-        {currentTrack && <Bar currentTrack={currentTrack} />}
+        {currentTrack && <Player currentTrack={currentTrack} />}
       </div>
     </div>
   );

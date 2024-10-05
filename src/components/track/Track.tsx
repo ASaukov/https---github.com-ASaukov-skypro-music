@@ -1,5 +1,6 @@
 import { TrackType } from "@/types/tracks";
 import styles from "./Track.module.css";
+import { FormateTime } from "@/utils/FormateTime";
 
 type TrackProps = {
   track: TrackType;
@@ -39,8 +40,7 @@ export const Track = ({ track, setCurrentTrack }: TrackProps) => {
             <use xlinkHref="/img/icon/sprite.svg#icon-like" />
           </svg>
           <span className={styles.trackTimeText}>
-            {Math.floor(track.duration_in_seconds / 60)}:{" "}
-            {Math.floor(track.duration_in_seconds % 60)}
+            {FormateTime(track.duration_in_seconds)}
           </span>
         </div>
       </div>
