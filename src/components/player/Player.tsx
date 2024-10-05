@@ -83,8 +83,8 @@ export const Player = ({ currentTrack }: props) => {
       <div className={styles.bar}>
         <div className={styles.barContent}>
           <div className={styles.barTimer}>
-            {FormateTime(progress.duration)} /{" "}
-            {FormateTime(progress.currentTime)}
+            {FormateTime(progress.currentTime)} / {}
+            {FormateTime(progress.duration)}
           </div>
           <audio
             className={styles.playerBrouser}
