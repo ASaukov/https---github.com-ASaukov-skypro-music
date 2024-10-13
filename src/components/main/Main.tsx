@@ -3,15 +3,12 @@ import { MainCenterblock } from "../mainCenterblock/mainCenterblock"
 import { Nav } from "../Nav/Nav"
 import { Sidebar } from "../sidebar/Sidebar"
 import styles from "./Main.module.css"
-type props={
-  setCurrentTrack: (track: TrackType) => void
-}
 
-export const Main = ({setCurrentTrack}: props) => {
+export const Main = () => {
     return (
         <main className={styles.main}>
           <Nav />
-          <MainCenterblock setCurrentTrack={setCurrentTrack}/>
+          <MainCenterblock />
           <Sidebar />
         </main>
     )

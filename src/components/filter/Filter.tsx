@@ -1,14 +1,14 @@
 "use client";
 
-import { TrackType } from "@/types/tracks";
 import styles from "./Filter.module.css";
 import { useState } from "react";
 import { FilterItem } from "./FilterItem";
 import { getUniqueValues } from "@/utils/GetUniqueValues";
+import { useAppSelector } from "@/store/store";
 
-type FilterProps = { tracks: TrackType[] };
 
-export const Filter = ({ tracks }: FilterProps) => {
+export const Filter = () => {
+  const {tracks} = useAppSelector(state => state.playlist)
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];
   const filters = [

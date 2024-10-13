@@ -121,3 +121,15 @@
     text-align: right;
     color: #696969;
   }
+
+  .trackTitleActive,
+  .trackTitleActivePlay {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #B672FF;
+  }
+
+  .trackTitleActivePlay {
+    animation: flickering 2s ease 0s infinite normal forwards;
+  }
