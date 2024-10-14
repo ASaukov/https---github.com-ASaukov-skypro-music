@@ -6,9 +6,8 @@ import { FilterItem } from "./FilterItem";
 import { getUniqueValues } from "@/utils/GetUniqueValues";
 import { useAppSelector } from "@/store/store";
 
-
 export const Filter = () => {
-  const {tracks} = useAppSelector(state => state.playlist)
+  const { tracks } = useAppSelector((state) => state.playlist);
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const filterOptions = ["По умолчанию", "Сначала новые", "Сначала старые"];
   const filters = [
@@ -30,7 +29,6 @@ export const Filter = () => {
   ];
 
   const handleFilter = (filterName: string) => {
-
     setActiveFilter((prev) => (prev === filterName ? null : filterName));
   };
 

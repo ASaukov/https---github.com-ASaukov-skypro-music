@@ -11,15 +11,21 @@ import {
 } from "react";
 import ProgressBar from "../progressBar/ProgressBar";
 import { FormateTime } from "@/utils/FormateTime";
-import { setIsShuffle, setNextTrack, setPrevTrack, setShuffle } from "@/store/features/playlistSlice";
+import {
+  setIsPlay,
+  setIsShuffle,
+  setNextTrack,
+  setPrevTrack,
+  setShuffle,
+} from "@/store/features/playlistSlice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-
 
 export const Player = () => {
   const dispatch = useAppDispatch();
 
-  const {isShuffle, currentTrack, tracks} = useAppSelector(state => state.playlist)
-  const [isPlay, setIsPlay] = useState(false);
+  const { isShuffle, currentTrack, tracks, isPlay } = useAppSelector(
+    (state) => state.playlist
+  );
   const [isRepeat, setIsRepeat] = useState(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
@@ -30,19 +36,26 @@ export const Player = () => {
   const onTogglePlay = () => {
     if (audioRef.current) {
       if (isPlay) {
-        setIsPlay(false);
+        dispatch(setIsPlay(false));
         audioRef.current.pause();
       } else {
-        setIsPlay(true);
+        dispatch(setIsPlay(true));
         audioRef.current.play();
       }
     }
   };
 
   useEffect(() => {
-    // setIsPlay(false);
+    dispatch(setIsPlay(false));
     onTogglePlay();
   }, []);
+
+  useEffect(() => {
+    if (currentTrack) {
+      audioRef.current?.play();
+      dispatch(setIsPlay(true));
+    }
+  }, [currentTrack]);
 
   const onRepeat = () => {
     if (audioRef.current) {
@@ -77,23 +90,20 @@ export const Player = () => {
   };
 
   const next = () => {
-    dispatch(setNextTrack())
-    console.log(tracks);
+    dispatch(setNextTrack());
   };
 
   const prev = () => {
-    dispatch(setPrevTrack())
+    dispatch(setPrevTrack());
   };
 
   const toggleShuffle = () => {
     dispatch(setIsShuffle(!isShuffle));
   };
 
-  useEffect (() => {
-    isShuffle && dispatch(setShuffle())
+  useEffect(() => {
+    isShuffle && dispatch(setShuffle());
   }, [isShuffle]);
-    
-  // console.log(isShuffle);
 
   return (
     <>
@@ -119,9 +129,7 @@ export const Player = () => {
           <div className={styles.barPlayerBlock}>
             <div className={styles.barPlayer}>
               <div className={styles.playerControls}>
-                <div 
-                onClick={prev} 
-                className={styles.playerBtnPrev}>
+                <div onClick={prev} className={styles.playerBtnPrev}>
                   <svg className={styles.playerBtnPrevSvg}>
                     <use xlinkHref="/img/icon/sprite.svg#icon-prev" />
                   </svg>
@@ -163,7 +171,7 @@ export const Player = () => {
                     styles.playerBtnShuffle,
                     styles._btnIcon,
                     {
-                      [styles.active]: isShuffle
+                      [styles.active]: isShuffle,
                     }
                   )}
                 >
@@ -181,12 +189,12 @@ export const Player = () => {
                   </div>
                   <div className={styles.trackPlayAuthor}>
                     <a className={styles.trackPlayAuthorLink} href="http://">
-                      {currentTrack.name}
+                      {currentTrack?.name}
                     </a>
                   </div>
                   <div className={styles.trackPlayAlbum}>
                     <a className={styles.trackPlayAlbumLink} href="http://">
-                      {currentTrack.author}
+                      {currentTrack?.author}
                     </a>
                   </div>
                 </div>

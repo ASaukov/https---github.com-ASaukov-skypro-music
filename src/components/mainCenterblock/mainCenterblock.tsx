@@ -12,14 +12,13 @@ import { setPlaylist } from "@/store/features/playlistSlice";
 
 export const MainCenterblock = () => {
   const dispatch = useAppDispatch();
-  
+
   const [err, setErr] = useState<string | null>(null);
   useEffect(() => {
     const getData = async () => {
       try {
         const res = await getTracks();
-        dispatch(setPlaylist(res))
-        
+        dispatch(setPlaylist(res));
       } catch (error) {
         if (error instanceof Error) {
           console.log(error.message);
@@ -28,11 +27,11 @@ export const MainCenterblock = () => {
       }
     };
     getData();
-  });
+  }, []);
   return (
     <div className={styles.mainCenterblock}>
       <Search />
-      <Filter/>
+      <Filter />
       <CenterblockPlaylist />
     </div>
   );
