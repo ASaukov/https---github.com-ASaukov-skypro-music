@@ -1,6 +1,5 @@
 "use client";
 
-import { TrackType } from "@/types/tracks";
 import styles from "./Player.module.css";
 import classNames from "classnames";
 import {
@@ -12,13 +11,21 @@ import {
 } from "react";
 import ProgressBar from "../progressBar/ProgressBar";
 import { FormateTime } from "@/utils/FormateTime";
+import {
+  setIsPlay,
+  setIsShuffle,
+  setNextTrack,
+  setPrevTrack,
+  setShuffle,
+} from "@/store/features/playlistSlice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 
-type props = {
-  currentTrack: TrackType;
-};
+export const Player = () => {
+  const dispatch = useAppDispatch();
 
-export const Player = ({ currentTrack }: props) => {
-  const [isPlay, setIsPlay] = useState(false);
+  const { isShuffle, currentTrack, tracks, isPlay } = useAppSelector(
+    (state) => state.playlist
+  );
   const [isRepeat, setIsRepeat] = useState(false);
   const [progress, setProgress] = useState({
     currentTime: 0,
@@ -29,18 +36,25 @@ export const Player = ({ currentTrack }: props) => {
   const onTogglePlay = () => {
     if (audioRef.current) {
       if (isPlay) {
-        setIsPlay(false);
+        dispatch(setIsPlay(false));
         audioRef.current.pause();
       } else {
-        setIsPlay(true);
+        dispatch(setIsPlay(true));
         audioRef.current.play();
       }
     }
   };
 
   useEffect(() => {
-    setIsPlay(false);
+    dispatch(setIsPlay(false));
     onTogglePlay();
+  }, []);
+
+  useEffect(() => {
+    if (currentTrack) {
+      audioRef.current?.play();
+      dispatch(setIsPlay(true));
+    }
   }, [currentTrack]);
 
   const onRepeat = () => {
@@ -62,6 +76,7 @@ export const Player = ({ currentTrack }: props) => {
   };
 
   const onChangeTime = (e: SyntheticEvent<HTMLAudioElement, Event>) => {
+    console.log(currentTrack?.track_file);
     setProgress({
       currentTime: e.currentTarget.currentTime,
       duration: e.currentTarget.duration,
@@ -74,9 +89,21 @@ export const Player = ({ currentTrack }: props) => {
     }
   };
 
-  const notUsed = () => {
-    alert("Еще не реализовано");
+  const next = () => {
+    dispatch(setNextTrack());
   };
+
+  const prev = () => {
+    dispatch(setPrevTrack());
+  };
+
+  const toggleShuffle = () => {
+    dispatch(setIsShuffle(!isShuffle));
+  };
+
+  useEffect(() => {
+    isShuffle && dispatch(setShuffle());
+  }, [isShuffle]);
 
   return (
     <>
@@ -91,7 +118,7 @@ export const Player = ({ currentTrack }: props) => {
             onTimeUpdate={onChangeTime}
             ref={audioRef}
             controls
-            src={currentTrack.track_file}
+            src={currentTrack!.track_file}
           />
           <ProgressBar
             max={progress.duration}
@@ -102,7 +129,7 @@ export const Player = ({ currentTrack }: props) => {
           <div className={styles.barPlayerBlock}>
             <div className={styles.barPlayer}>
               <div className={styles.playerControls}>
-                <div onClick={notUsed} className={styles.playerBtnPrev}>
+                <div onClick={prev} className={styles.playerBtnPrev}>
                   <svg className={styles.playerBtnPrevSvg}>
                     <use xlinkHref="/img/icon/sprite.svg#icon-prev" />
                   </svg>
@@ -119,7 +146,7 @@ export const Player = ({ currentTrack }: props) => {
                     )}
                   </svg>
                 </div>
-                <div onClick={notUsed} className={styles.playerBtnNext}>
+                <div onClick={next} className={styles.playerBtnNext}>
                   <svg className={styles.playerBtnNextSvg}>
                     <use xlinkHref="/img/icon/sprite.svg#icon-next" />
                   </svg>
@@ -139,10 +166,13 @@ export const Player = ({ currentTrack }: props) => {
                   </svg>
                 </div>
                 <div
-                  onClick={notUsed}
+                  onClick={toggleShuffle}
                   className={classNames(
                     styles.playerBtnShuffle,
-                    styles._btnIcon
+                    styles._btnIcon,
+                    {
+                      [styles.active]: isShuffle,
+                    }
                   )}
                 >
                   <svg className={styles.playerBtnShuffleSvg}>
@@ -159,12 +189,12 @@ export const Player = ({ currentTrack }: props) => {
                   </div>
                   <div className={styles.trackPlayAuthor}>
                     <a className={styles.trackPlayAuthorLink} href="http://">
-                      {currentTrack.name}
+                      {currentTrack?.name}
                     </a>
                   </div>
                   <div className={styles.trackPlayAlbum}>
                     <a className={styles.trackPlayAlbumLink} href="http://">
-                      {currentTrack.author}
+                      {currentTrack?.author}
                     </a>
                   </div>
                 </div>

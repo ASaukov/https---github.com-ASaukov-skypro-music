@@ -121,3 +121,18 @@
     text-align: right;
     color: #696969;
   }
+
+  .trackTitleActive,
+  .trackTitleActivePlay {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #B672FF;
+    animation: pulsAnimation 1s ease 0s infinite normal forwards;
+  }
+  
+  @keyframes pulsAnimation {
+    0% {transform: scale(0.5);}
+    50% {transform: scale(1);}
+    100% {transform: scale(0.5);}
+  }
